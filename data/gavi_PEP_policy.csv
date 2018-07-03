@@ -1,0 +1,74 @@
+Country,CODE,Eligibility.in.2018,Entering_preperatory_transition_phase,Entering_accelerated_transition_phase,Entering_fully_self_financing_phase,PEP,Rabies
+Afghanistan,AFG,Initial self-financing,2029,NA,NA,free,endemic
+Angola,AGO,Fully self-financing,NA,2011,2016,free,endemic
+Armenia,ARM,Fully self-financing,NA,2011,2016,,endemic
+Azerbaijan,AZE,Fully self-financing,NA,2011,2016,,endemic
+Bangladesh,BGD,Preparatory transition phase,2016,2022,2027,free,endemic
+Benin,BEN,Initial self-financing,2023,2032,2037,patient pays,endemic
+Bhutan,BTN,Fully self-financing,NA,2011,2016,free,endemic
+Bolivia,BOL,Fully self-financing,NA,2011,2016,,endemic
+Burkina Faso,BFA,Initial self-financing,2028,NA,NA,,endemic
+Burundi,BDI,Initial self-financing,2032,NA,NA,,endemic
+Cambodia,KHM,Preparatory transition phase,2017,2025,2030,subsidized,endemic
+Cameroon,CMR,Preparatory transition phase,2011,2029,2034,patient pays,endemic
+Central African Republic,CAF,Initial self-financing,2030,NA,NA,free,endemic
+Chad,TCD,Initial self-financing,2032,NA,NA,subsidized,endemic
+Comoros,COM,Initial self-financing,2027,NA,NA,,no rabies
+Congo,COG,Fully self-financing,NA,2011,2016,,endemic
+Ivory Coast,CIV,Preparatory transition phase,2011,2021,2026,patient pays,endemic
+Cuba,CUB,Fully self-financing,NA,2011,2016,free,endemic
+Dem. People's Republic of Korea,PRK,Initial self-financing,NA,NA,NA,,endemic
+Democratic Republic of the Congo,COD,Initial self-financing,NA,NA,NA,patient pays,endemic
+Djibouti,DJI,Preparatory transition phase,2011,NA,NA,patient pays,endemic
+Eritrea,ERI,Initial self-financing,2024,2032,2037,,endemic
+Ethiopia,ETH,Initial self-financing,2026,2034,2039,subsidized,endemic
+Gambia,GMB,Initial self-financing,NA,NA,NA,,endemic
+Georgia,GEO,Fully self-financing,NA,2011,2016,free,endemic
+Ghana,GHA,Preparatory transition phase,2018,2024,2029,free,endemic
+Guinea,GIN,Initial self-financing,NA,NA,NA,patient pays,endemic
+Guinea Bissau,GNB,Initial self-financing,2031,NA,NA,free,endemic
+Guyana,GUY,Fully self-financing,NA,2012,2017,,endemic
+Haiti,HTI,Initial self-financing,NA,NA,NA,patient pays,endemic
+Honduras,HND,Fully self-financing,NA,2011,2016,,endemic
+India,IND,Accelerated transition phase,2011,2017,2022,subsidized (75%),endemic
+Indonesia,IDN,Fully self-financing,NA,2011,2016,,endemic
+Kenya,KEN,Preparatory transition phase,2016,2022,2027,patient pays,endemic
+Kiribati,KIR,Fully self-financing,NA,2011,2016,,no rabies
+Kyrgyzstan,KGZ,Preparatory transition phase,2015,2029,2034,,endemic
+Lao People's Democratic Republic,LAO,Accelerated transition phase,2015,2017,2022,patient pays,endemic
+Lesotho,LSO,Preparatory transition phase,2011,2025,2030,free,endemic
+Liberia,LBR,Initial self-financing,NA,NA,NA,free,endemic
+Madagascar,MDG,Initial self-financing,NA,NA,NA,subsidized,endemic
+Malawi,MWI,Initial self-financing,NA,NA,NA,,endemic
+Mali,MLI,Initial self-financing,2034,NA,NA,patient pays,endemic
+Mauritania,MRT,Preparatory transition phase,2015,NA,NA,,endemic
+Mongolia,MNG,Fully self-financing,NA,2011,2016,free,endemic
+Mozambique,MOZ,Initial self-financing,2034,NA,NA,free,endemic
+Myanmar,MMR,Preparatory transition phase,2016,2023,2028,,endemic
+Nepal,NPL,Initial self-financing,2023,2031,2036,free,endemic
+Nicaragua,NIC,Accelerated transition phase,2015,2016,2021,,endemic
+Niger,NER,Initial self-financing,NA,NA,NA,patient pays,endemic
+Nigeria,NGA,Accelerated transition phase,2015,2017,2022,free,endemic
+Pakistan,PAK,Preparatory transition phase,2011,2021,2026,free,endemic
+Papua New Guinea,PNG,Accelerated transition phase,2015,2016,2021,,no rabies
+Republic of Moldova,MDA,Fully self-financing,NA,2011,2016,,endemic
+Rwanda,RWA,Initial self-financing,2027,NA,NA,,endemic
+Sao Tome and Principe,STP,Accelerated transition phase,2015,2018,2023,,no rabies
+Senegal,SEN,Initial self-financing,2020,2030,2035,,endemic
+Sierra Leone,SLE,Initial self-financing,2029,NA,NA,patient pays,endemic
+Solomon Islands,SLB,Accelerated transition phase,2015,2017,2022,,no rabies
+Somalia,SOM,Initial self-financing,NA,NA,NA,patient pays,endemic
+South Sudan,SSD,Initial self-financing,2015,NA,NA,,endemic
+Sri Lanka,LKA,Fully self-financing,NA,2011,2016,free,endemic
+Sudan,SDN,Preparatory transition phase,2015,2020,2025,patient pays,endemic
+Tajikistan,TJK,Preparatory transition phase,2016,2027,2032,,endemic
+Tanzania,TZA,Initial self-financing,2020,2029,2034,patient pays,endemic
+Timor-Leste,TLS,Fully self-financing,NA,2013,2018,,no rabies
+Togo,TGO,Initial self-financing,2034,NA,NA,,endemic
+Uganda,UGA,Initial self-financing,2030,NA,NA,,endemic
+Ukraine,UKR,Fully self-financing,NA,2011,2016,free,endemic
+Uzbekistan,UZB,Accelerated transition phase,NA,2014,2019,,endemic
+Vietnam,VNM,Accelerated transition phase,NA,2015,2020,patient pays,endemic
+Yemen,YEM,Preparatory transition phase,2015,2031,2036,,endemic
+Zambia,ZMB,Preparatory transition phase,2015,2025,2030,,endemic
+Zimbabwe,ZWE,Initial self-financing,NA,NA,NA,free,endemic
