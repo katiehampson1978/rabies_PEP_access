@@ -1,5 +1,5 @@
 ################################################################################
-#                         Run Multivar decision tree model                     #
+#                   7.1.2 Run Multivar decision tree model                     #
 #             OUTPUTS USED BY GAVI AND IN PAPER FOR BURDEN ESTIMATES           #
 # run ICER scenarios (no discount) for MIN prices i.e. improved PEP & RIG
 # save outputs to folder: countryLTs_nodiscount
@@ -34,9 +34,8 @@ source("R/prob_rabies.R") # Probability of developing rabies - sensitivity analy
 source("R/decision_tree_sensitivity_by_year.R") # Sensitivity analysis
 source("R/decision_tree_multivariate_analysis_by_year_v2.R") # Multivariate sensitivity analysis
 source("R/scenario_params.R") # Parameters and functions for gavi support and phasing
-# source("R/multivar_output_summary_V4.R") # MEDIAN
-source("R/multivar_output_summary_V3.R") # MEAN
-source("R/multivariate_plot_summarise_data_V2.R")
+source("R/multivar_output_summary_Github.R") # MEAN
+source("R/multivariate_plot_summarise_data_Github.R")
 
 # Set folder name for output
 folder_name <- "countryLTs_nodiscount"
@@ -44,10 +43,8 @@ folder_name <- "countryLTs_nodiscount"
 ######################
 # 1. Setup variables #
 ######################
-# Variables setup/loaded in order they are used in multivariate_analysis() function arguments
 
-# DEFAULTS
-rabies = read.csv("data/baseline_incidence_Gavi.csv") # incidence from fitted model - with NO vaccination
+rabies = read.csv("data/baseline_incidence_Gavi_final.csv")
 data <- read.csv("output/gavi_output_data.csv") # Load gavi-prepared data
 params <- read.csv("output/bio_data.csv") # parameters i.e. rabies transmission, prevention given incomplete PEP
 vacc <- read.csv("data/vaccine_use.csv") # PEP scenarios - clinic throughput, regimen, completeness, vials, clinic visits:
@@ -82,22 +79,22 @@ gavi_RIG_price <- 20 # ERIG cost per vial
 
 # Set number of runs
 n=1000
-# n = 5
 
-# SQ
+# SQ - Paper SC1
 scenario_a1 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="none", DogVax_TF=F, VaxRegimen="Updated TRC",
                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
 
-# PEP access
+# Improved PEP access - Paper SC2 (base)
 scenario_a3_1 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=F, VaxRegimen="Updated TRC",
                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# + RIG
+# Improved PEP access + RIG - Paper SC3
 scenario_a4 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=F, VaxRegimen="Updated TRC",
                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="high risk", discount=discount, breaks="5yr", IBCM=FALSE)
 
 ###########################################
 # 3. Bind outputs into a single dataframe #
 ###########################################
+
 # Append all results into a dataframe
 out <- rbind.data.frame(
   cbind.data.frame(scenario_a1, scenario="a1"),
@@ -119,12 +116,13 @@ out$cost_per_death_averted <-  out$total_cost/out$total_deaths_averted
 out$cost_per_YLL_averted <-  out$total_cost/out$total_YLL_averted
 out$deaths_averted_per_100k_vaccinated <-  out$total_deaths_averted/out$vaccinated/100000
 
-# summarize by iteration over time horizon
+# Summarize by iteration over time horizon
 out_horizon = country_horizon_iter(out)
 
 ######################################
 # 4a. Create summary outputs         #
 ######################################
+
 # Country, cluster, & global by year
 country_summary_yr = multivar_country_summary(out, year = TRUE)
 cluster_summary_yr = multivar_summary(country_summary_yr, year=TRUE, setting ="cluster")
@@ -145,11 +143,6 @@ country_summary_horizon = multivar_country_summary(out_horizon, year = FALSE)
 cluster_summary_horizon = multivar_summary(country_summary_horizon, year=FALSE, setting ="cluster")
 global_summary_horizon = multivar_summary(country_summary_horizon, year=FALSE, setting="global")
 gavi2018_summary_horizon = multivar_summary(country_summary_horizon[which(country_summary_horizon$gavi_2018==TRUE),], year=FALSE, setting="global")
-
-# CHECK - should be 0 for all 3!!
-nrow(cluster_summary_horizon[which(is.infinite(cluster_summary_horizon$cost_per_death_averted)),])
-nrow(cluster_summary_horizon[which(is.infinite(cluster_summary_horizon$cost_per_death_averted_lci)),])
-nrow(cluster_summary_horizon[which(is.infinite(cluster_summary_horizon$cost_per_death_averted_uci)),])
 
 write.csv(country_summary_horizon, paste("output/", folder_name, "/country_stats_horizon_minRIG_ICER.csv", sep=""), row.names=FALSE)
 write.csv(cluster_summary_horizon, paste("output/", folder_name, "/cluster_stats_horizon_minRIG_ICER.csv", sep=""), row.names=FALSE)

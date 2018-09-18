@@ -1,0 +1,17 @@
+"Setting","regimen","completeness","vial","RIG_wound"
+"Rural","IM","Complete",4,NA
+"Urban","IM","Complete",4,0.32
+"Rural","Updated TRC","Complete",2.76,NA
+"Urban","Updated TRC","Complete",0.93,0.32
+"Rural","IPC","Complete",2.2,NA
+"Urban","IPC","Complete",0.67,0.32
+"Rural","NTV","Complete",14,NA
+"Urban","NTV","Complete",14,0.32
+"Rural","IM","Incomplete",2,NA
+"Urban","IM","Incomplete",2,0.32
+"Rural","Updated TRC","Incomplete",1.84,NA
+"Urban","Updated TRC","Incomplete",0.62,0.32
+"Rural","IPC","Incomplete",1.47,NA
+"Urban","IPC","Incomplete",0.45,0.32
+"Rural","NTV","Incomplete",9.33,NA
+"Urban","NTV","Incomplete",9.33,0.32

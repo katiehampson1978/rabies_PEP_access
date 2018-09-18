@@ -1,0 +1,2 @@
+"prop_rabid.bites","n_rabid.bites","n_bite.vics","prob_head","n_head.bites","prob_arm","n_arm.bites","prob_trunk","n_trunk.bites","prob_leg","n_leg.bites","prob_death_given_head","n_no.pep.head","n_deaths.head","prob_death_given_arm","n_no.pep.arm","n_deaths.arm","prob_death_given_trunk","n_no.pep.trunk","n_deaths.trunk","prob_death_given_leg","n_no.pep.leg","n_deaths.leg"
+0.64754953076121,1863,2877,"0.08803006",164,"0.31454643",586,"0.13848631",258,"0.4589372",855,"0.38461538",39,15,"0.140625",128,18,"0.21538462",65,14,"0.12658228",237,30

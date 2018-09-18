@@ -1,6 +1,6 @@
 ################################################################################
 #                 Setup data for multivariate decision-tree model              #
-# prepare data for running decision tree scenarios: output/gavi_output_data.csv
+# Prepare data for running decision tree scenarios: output/gavi_output_data.csv
 ################################################################################
 rm(list=ls())
 
@@ -38,8 +38,6 @@ library(Hmisc)
 #### (5b) As (5a) with integrated bite case management (rationalized PEP provision)
 #######################################################################
 
-# Complete all data processing (scripts: 1-6)
-
 # Load in data from curation process (prepped_data)
 country_data <- read.csv("output/prepped_data_final.csv")
 country_data$Business.Plan.Phase <- as.character(country_data$Business.Plan.Phase)
@@ -48,36 +46,31 @@ country_data$Business.Plan.Phase[which(is.na(country_data$Business.Plan.Phase))]
 # Americas - Bolivia, Cuba, Haiti, Honduras - all in GBP (I or II); Guyana, Nicaragua not in GBP
 country_data$Business.Plan.Phase[which(country_data$cluster=="americas" & country_data$Business.Plan.Phase=="II")] <- "I"
 
-# only include countries endemic for rabies AND GAVI eligibile
+# Only include countries endemic for rabies AND GAVI eligibile
 unique(country_data$gavi); table(country_data$gavi) # Gavi eligible
 unique(country_data$endemic); table(country_data$endemic) # Endemic
 data_prepped <- dplyr::filter(country_data, endemic==1) %>% dplyr::filter(gavi=="TRUE")
 dim(data_prepped) # 67 rabies endemic AND gavi countries
 
-# GBD 2010 study - LE of 86 years at birth (based on highest observed LE per age group)
-# GBD2010 <- read.csv("data/GBD2010_LE.csv") # can be country specific - Depending on if needed for Gavi/WHO
-# country_LE <- read.csv("data/lifetables_bycountry.csv")
-# country_LE <- country_LE[-which(country_LE$age_from == 100),]
-# LE2020 <- country_LE[which(country_LE$year == 2020),] # 2020 age distributions throughout
+#######################################################################
+#               Arrange data ready to run scenarios                   #
+#######################################################################
 
-#######################################################################
-#               arrange data ready to run scenarios                   #
-#######################################################################
 data_pre_test <- data_prepped
 data_pre_test$bite_inc_susp = data_pre_test$exp_inc
 data_pre_test$bite_inc_non_susp = data_pre_test$preds_SQ
 data_pre_test$bite_inc_susp_LCI <- data_pre_test$LCI_exp_inc
 data_pre_test$bite_inc_susp_UCI <- data_pre_test$UCI_exp_inc
 
-## clusters
+# Clusters
 unique(data_pre_test$cluster); dim(data_pre_test)
 
-## columns storing the sample size
+# Columns storing the sample size
 ssize_cols <- grep("_n", colnames(data_pre_test), value=TRUE)
 ssize_cols <- grep("p_", ssize_cols, value=TRUE)
 data <- data_pre_test
 
-## insert 1000 in the columns where no sample size available
+# Insert 1000 in the columns where no sample size available
 for(k in 1:length(ssize_cols)){
   indx <- which(complete.cases(data[[ssize_cols[k]]])==F)
   if(rlang::is_empty(indx)){ ## if no NAs, do nothing
@@ -87,7 +80,7 @@ for(k in 1:length(ssize_cols)){
   }
 }
 
-# SORT OUT PROPORTION ID DATA
+# Sort out proportion ID data
 data$ID[which(is.na(data$ID))]<-FALSE
 data$ID = data$ID*1
 data$ID[which(data$country=="India")] = 0.4 # doing some ID administration (extracted from India data)

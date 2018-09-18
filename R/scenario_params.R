@@ -13,7 +13,7 @@ p_step <- data.frame(base = 0.1, low = 0.05, high = 0.15)
 p_increment <- 0.03 # 3% per annum as per other Gavi vaccines
 
 # RIG
-p_RIG_increment <- 0.025 # improved access to RIG by 2.5% per year
+p_RIG_increment <- 0.025 # Improved access to RIG by 2.5% per year
 p_RIG_cap <- 0.15 # Maximum of 15% access in urban areas ONLY
 
 # Gavi phasing
@@ -34,6 +34,7 @@ gavi_phasing = function(phase, p_SQ, step, increment, cap){
   }
   p
 }
+
 # 172 - Tanzania
 # gavi_phasing(phase = gavi_phaseII, p_SQ = data$p_seek[30], step = p_step$base, increment = p_increment, cap = p_seek_cap$base)
 # 14 - Bangladesh (has a high p_seek!)
@@ -60,11 +61,3 @@ gavi_intro = function(phase){
 # IBCM parameters
 IBCM_endemic = 0.5
 IBCM_elim = 0.1
-
-
-#gavi_intro(gavi_phaseI)
-# gavi_intro(gavi_phaseII)
-# gavi_intro(gavi_phaseIII)
-
-
-

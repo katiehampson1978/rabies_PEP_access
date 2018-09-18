@@ -36,7 +36,7 @@ source("R/decision_tree_sensitivity_by_year.R") # Sensitivity analysis
 source("R/decision_tree_multivariate_analysis_by_year_v2.R") # Multivariate sensitivity analysis
 source("R/scenario_params.R") # parameters and functions for gavi support and phasing
 source("R/univar_output_summary.R")
-source("R/univariate_plot_summarise_data_V2.R")
+source("R/univariate_plot_summarise_data_Github.R")
 
 # Set folder name for output
 folder_name <- "univariate"
@@ -46,7 +46,7 @@ folder_name <- "univariate"
 ######################
 
 # DEFAULTS
-rabies = read.csv("data/baseline_incidence_Gavi.csv") # incidence from fitted model - with NO vaccination
+rabies = read.csv("data/baseline_incidence_Gavi_final.csv")
 data <- read.csv("output/gavi_output_data.csv") # Load gavi-prepared data
 params <- read.csv("output/bio_data.csv") # parameters i.e. rabies transmission, prevention given incomplete PEP
 vacc <- read.csv("data/vaccine_use.csv") # PEP scenarios - clinic throughput, regimen, completeness, vials, clinic visits:
@@ -60,7 +60,6 @@ hrz=length(2020:2035)
 
 # Load in DALYs - disability weightings and lifetables
 DALYrabies_input <- read.csv("data/DALY_params_rabies.csv") # from Knobel et al. 2005
-
 
 # SPECIFIC PARAMETERS
 # Life table
@@ -79,17 +78,17 @@ gavi_RIG_price <- 45 # ERIG cost per vial
 ################################################################################
 #                  RUN UNIVARIATE MODELS FOR GAVI COUNTRIES                  #
 ################################################################################
-# data=data[2,]
-# n = 10 # 10 mins to run for a check (sensitivity analyses plot)
+
 n = 500 # ~2 hrs per scenario, so 6 hours total
 
-# USE COUNTRY-SPECIFIC LIFE TABLE!
 # Examine baseline scenario
 scenario_a1 <- univariate_analysis(ndraw=n, horizon=hrz, GAVI_status="none", DogVax_TF=F, VaxRegimen="Updated TRC",
                                    DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
+
 # Examine improved PEP
 scenario_a3_1 <- univariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=F, VaxRegimen="Updated TRC",
                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
+
 # Examine dog vaccination plus improved PEP
 scenario_a5_1 <- univariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=T, VaxRegimen="Updated TRC",
                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
@@ -101,14 +100,8 @@ scenario_a5_1 <- univariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", D
 # Append all results into a dataframe
 out <- rbind.data.frame(
   cbind.data.frame(scenario_a1, scenario="a1"),
-  #cbind.data.frame(scenario_a2, scenario="a2"),
   cbind.data.frame(scenario_a3_1, scenario="a3_1"),
-  #cbind.data.frame(scenario_a3_2, scenario="a3_2"),
-  #cbind.data.frame(scenario_a3_3, scenario="a3_3"),
-  # cbind.data.frame(scenario_a4, scenario="a4") # ,
-  cbind.data.frame(scenario_a5_1, scenario="a5_1")
-  # cbind.data.frame(scenario_a5_2, scenario="a5_2")
-)
+  cbind.data.frame(scenario_a5_1, scenario="a5_1"))
 dim(out)
 table(out$scenario)
 
@@ -124,10 +117,11 @@ out$cost_per_death_averted <-  out$total_cost/out$total_deaths_averted
 out$cost_per_YLL_averted <-  out$total_cost/out$total_YLL_averted
 out$deaths_averted_per_100k_vaccinated <-  out$total_deaths_averted/out$vaccinated/100000
 
-# summarize by iteration over time horizon
+# Summarize by iteration over time horizon
 out_horizon = country_horizon_iter_univar(out)
 out_horizon$iter_order <- rank(out_horizon$total_deaths)
 mean(out_horizon$total_deaths)
+
 ######################################
 # 4a. Create summary outputs         #
 ######################################
@@ -147,18 +141,11 @@ write.csv(gavi2018_summary_yr, paste("output/", folder_name, "/gavi2018_stats.cs
 # 4b. Create summary outputs over time horizon #
 ################################################
 
-# country_summary_horizon <- read.csv(paste("output/", folder_name, "/country_stats_horizon.csv", sep=""), stringsAsFactors=FALSE)
-
 # Country, cluster, & global over time horizon
 country_summary_horizon = univar_country_summary(out_horizon, year = FALSE)
 cluster_summary_horizon = univar_summary(country_summary_horizon, year=FALSE, setting ="cluster")
 global_summary_horizon = univar_summary(country_summary_horizon, year=FALSE, setting="global")
 gavi2018_summary_horizon = univar_summary(country_summary_horizon[which(country_summary_horizon$gavi_2018==TRUE),], year=FALSE, setting="global")
-
-# CHECK - should be 0 for all 3!!
-nrow(cluster_summary_horizon[which(is.infinite(cluster_summary_horizon$cost_per_death_averted)),])
-nrow(cluster_summary_horizon[which(is.infinite(cluster_summary_horizon$cost_per_death_averted_lci)),])
-nrow(cluster_summary_horizon[which(is.infinite(cluster_summary_horizon$cost_per_death_averted_uci)),])
 
 write.csv(country_summary_horizon, paste("output/", folder_name, "/country_stats_horizon.csv", sep=""), row.names=FALSE)
 write.csv(cluster_summary_horizon, paste("output/", folder_name, "/cluster_stats_horizon.csv", sep=""), row.names=FALSE)

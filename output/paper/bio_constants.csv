@@ -1,0 +1,6 @@
+"Parameter","Probability","Value (95% CIs)","n","Rationale"
+"P|infect","Developing infection in the absence of PEP","0.166 (0.131-0.202)",2877,"Observational studies [13]"
+"P|prevent1","Complete and timely vaccination prevents rabies*","1 (0.992-1)",473,"Observational studies [13]"
+"P|prevent2","Incomplete/ late vaccination prevents rabies**","0.986 (0.977-0.992)",1005,"Observational studies [13]"
+"P|prevent3","Complete NTV prevents rabies","0.993 (0.973-0.998)",267,"Observational studies [14]"
+"P|prevent4","Incomplete NTV prevents rabies***","0.941 (0.841-0.98)",51,"Observational studies [14]"

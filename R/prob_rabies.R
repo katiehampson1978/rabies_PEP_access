@@ -1,19 +1,5 @@
 # Probability of developing rabies depending on where on the body bitten
-# Created by Katie Hampson - 31 Jul 17
-# transmission <- read.csv("data/tz_p_rabies_transmission.csv")
 transmission <- read.csv("data/biological_param_p_infect.csv")
-# CHECK
-# p_head = transmission$prob_head
-# p_arm = transmission$prob_arm
-# p_trunk = transmission$prob_trunk
-# p_leg = transmission$prob_leg
-#
-# pdeath_head = transmission$prob_death_given_head
-# pdeath_arm = transmission$prob_death_given_arm
-# pdeath_trunk = transmission$prob_death_given_trunk
-# pdeath_leg = transmission$prob_death_given_leg
-
-#(p_head * pdeath_head) + (p_arm * pdeath_arm) + (p_trunk * pdeath_trunk) + (p_leg * pdeath_leg)
 
 mixture_model<-function(n){ # Cleaveland 2002 mixture model
   N = transmission$n_rabid.bites # N BITES
@@ -87,6 +73,3 @@ mixture_model_triangle<-function(n, range = 0.05){ # Cleaveland 2002 mixture mod
 
   return(prob_death_given_rabid_bite)
 }
-
-# prab = mixture_model(1000)
-# quantile(prab, prob=c(0.025, 0.5, 0.975))

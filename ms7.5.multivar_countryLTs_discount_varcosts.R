@@ -34,7 +34,7 @@ source("R/PEP.R") # Vial use under different regimens and throughput
 source("R/prob_rabies.R") # Probability of developing rabies - sensitivity analysis
 source("R/decision_tree_sensitivity_by_year.R") # Sensitivity analysis
 source("R/decision_tree_multivariate_analysis_by_year_v2.R") # Multivariate sensitivity analysis
-source("R/multivar_output_summary_V3.R")
+source("R/multivar_output_summary_Github.R")
 source("R/scenario_params.R") # Parameters and functions for gavi support and phasing
 
 # Set folder name for output
@@ -44,11 +44,7 @@ folder_name <- "countryLTs_discount_mincosts"
 # 1. Setup variables #
 ######################
 
-# These variables are setup/loaded in the order they are used in the
-# multivariate_analysis() function arguments
-
-# DEFAULTS
-rabies = read.csv("data/baseline_incidence_Gavi.csv") # incidence from fitted model - with NO vaccination
+rabies = read.csv("data/baseline_incidence_Gavi_final.csv")
 data <- read.csv("output/gavi_output_data.csv") # Load gavi-prepared data
 params <- read.csv("output/bio_data.csv") # parameters i.e. rabies transmission, prevention given incomplete PEP
 vacc <- read.csv("data/vaccine_use.csv") # PEP scenarios - clinic throughput, regimen, completeness, vials, clinic visits:
@@ -77,46 +73,20 @@ gavi_intro_grant <- 100000 # Intro grant
 gavi_vaccine_price <- 2.5 # vaccine cost per vial
 gavi_RIG_price <- 20 # ERIG cost per vial - CHANGE TO $20!
 
-
 ################
 # 2. Run model #
 ################
 
 # Set number of runs
-n = 5 #
-# n = 500 # ~1 hr per scenario, so just 2 hours
+n = 500 # ~1(2) hr per scenario, so just 2 hours
 
-# scenario_a1 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="none", DogVax_TF=F, VaxRegimen="Updated TRC",
-#                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a1, paste("output/", folder_name, "/scenario_a1_gavi.csv", sep="")) # # a1 works ok
-
-# scenario_a2 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="none", DogVax_TF=T, VaxRegimen="Updated TRC",
-#                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a2, paste("output/", folder_name, "/scenario_a2_gavi.csv", sep="")) # # a2 works ok
-
+# Improved PEP - Paper SC2 (base)
 scenario_a3_1 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=F, VaxRegimen="Updated TRC",
                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a3_1, paste("output/", folder_name, "/scenario_a3_1_gavi.csv", sep="")) # # a3_1 works ok
 
-# scenario_a3_2 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="low", DogVax_TF=F, VaxRegimen="Updated TRC",
-#                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a3_2, paste("output/", folder_name, "/scenario_a3_2_gavi.csv", sep="")) # # a3_2 works ok
-
-# scenario_a3_3 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="high", DogVax_TF=F, VaxRegimen="Updated TRC",
-#                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a3_3, paste("output/", folder_name, "/scenario_a3_3_gavi.csv", sep="")) # # a3_3 works ok
-
+# Improved PEP + RIG - Paper SC3
 scenario_a4 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=F, VaxRegimen="Updated TRC",
                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="high risk", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a4, paste("output/", folder_name, "/scenario_a4_gavi.csv", sep="")) # # a4 works ok
-#
-# scenario_a5_1 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=T, VaxRegimen="Updated TRC",
-#                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# # write.csv(scenario_a5_1, paste("output/", folder_name, "/scenario_a5_1_gavi.csv", sep="")) # # a5_1 works ok
-#
-# scenario_a5_2 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=T, VaxRegimen="Updated TRC",
-#                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=TRUE)
-# write.csv(scenario_a5_2, paste("output/", folder_name, "/scenario_a5_2_gavi.csv", sep="")) # # a5_2 works ok
 
 ###########################################
 # 3. Bind outputs into a single dataframe #
@@ -124,15 +94,7 @@ scenario_a4 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", D
 
 # Append all results into a dataframe
 out <- rbind.data.frame(
-  #cbind.data.frame(scenario_a1, scenario="a1"),
-  #cbind.data.frame(scenario_a2, scenario="a2"),
-  cbind.data.frame(scenario_a3_1, scenario="a3_1"),
-  #cbind.data.frame(scenario_a3_2, scenario="a3_2"),
-  #cbind.data.frame(scenario_a3_3, scenario="a3_3"),
-  cbind.data.frame(scenario_a4, scenario="a4") # ,
-  # cbind.data.frame(scenario_a5_1, scenario="a5_1"),
-  # cbind.data.frame(scenario_a5_2, scenario="a5_2")
-  )
+  cbind.data.frame(scenario_a4, scenario="a4"))
 dim(out)
 table(out$scenario)
 
@@ -149,7 +111,7 @@ out$cost_per_death_averted <-  out$total_cost/out$total_deaths_averted
 out$cost_per_YLL_averted <-  out$total_cost/out$total_YLL_averted
 out$deaths_averted_per_100k_vaccinated <-  out$total_deaths_averted/out$vaccinated/100000
 
-# summarize by iteration over time horizon
+# Summarize by iteration over time horizon
 out_horizon = country_horizon_iter(out)
 
 ######################################
@@ -208,37 +170,13 @@ gavi_RIG_price <- 45 # ERIG cost per vial
 # 2. Run model #
 ################
 
-# scenario_a1 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="none", DogVax_TF=F, VaxRegimen="Updated TRC",
-#                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a1, paste("output/", folder_name, "/scenario_a1_gavi.csv", sep="")) # # a1 works ok
-
-# scenario_a2 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="none", DogVax_TF=T, VaxRegimen="Updated TRC",
-#                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a2, paste("output/", folder_name, "/scenario_a2_gavi.csv", sep="")) # # a2 works ok
-
+# Improved PEP - Paper SC2 (base)
 scenario_a3_1 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=F, VaxRegimen="Updated TRC",
                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a3_1, paste("output/", folder_name, "/scenario_a3_1_gavi.csv", sep="")) # # a3_1 works ok
 
-# scenario_a3_2 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="low", DogVax_TF=F, VaxRegimen="Updated TRC",
-#                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a3_2, paste("output/", folder_name, "/scenario_a3_2_gavi.csv", sep="")) # # a3_2 works ok
-
-# scenario_a3_3 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="high", DogVax_TF=F, VaxRegimen="Updated TRC",
-#                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a3_3, paste("output/", folder_name, "/scenario_a3_3_gavi.csv", sep="")) # # a3_3 works ok
-
+# Improved PEP + RIG - Paper SC3
 scenario_a4 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=F, VaxRegimen="Updated TRC",
                                      DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="high risk", discount=discount, breaks="5yr", IBCM=FALSE)
-# write.csv(scenario_a4, paste("output/", folder_name, "/scenario_a4_gavi.csv", sep="")) # # a4 works ok
-
-# scenario_a5_1 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=T, VaxRegimen="Updated TRC",
-#                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=FALSE)
-# # write.csv(scenario_a5_1, paste("output/", folder_name, "/scenario_a5_1_gavi.csv", sep="")) # # a5_1 works ok
-#
-# scenario_a5_2 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", DogVax_TF=T, VaxRegimen="Updated TRC",
-#                                        DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none", discount=discount, breaks="5yr", IBCM=TRUE)
-# write.csv(scenario_a5_2, paste("output/", folder_name, "/scenario_a5_2_gavi.csv", sep="")) # # a5_2 works ok
 
 ###########################################
 # 3. Bind outputs into a single dataframe #
@@ -246,15 +184,8 @@ scenario_a4 <- multivariate_analysis(ndraw=n, horizon=hrz, GAVI_status="base", D
 
 # Append all results into a dataframe
 out <- rbind.data.frame(
-  #cbind.data.frame(scenario_a1, scenario="a1"),
-  #cbind.data.frame(scenario_a2, scenario="a2"),
   cbind.data.frame(scenario_a3_1, scenario="a3_1"),
-  #cbind.data.frame(scenario_a3_2, scenario="a3_2"),
-  #cbind.data.frame(scenario_a3_3, scenario="a3_3"),
-  cbind.data.frame(scenario_a4, scenario="a4") # ,
-  # cbind.data.frame(scenario_a5_1, scenario="a5_1"),
-  # cbind.data.frame(scenario_a5_2, scenario="a5_2")
-)
+  cbind.data.frame(scenario_a4, scenario="a4"))
 dim(out)
 table(out$scenario)
 
@@ -266,7 +197,7 @@ out$cost_per_death_averted <-  out$total_cost/out$total_deaths_averted
 out$cost_per_YLL_averted <-  out$total_cost/out$total_YLL_averted
 out$deaths_averted_per_100k_vaccinated <-  out$total_deaths_averted/out$vaccinated/100000
 
-# summarize by iteration over time horizon
+# Summarize by iteration over time horizon
 out_horizon = country_horizon_iter(out)
 
 ######################################

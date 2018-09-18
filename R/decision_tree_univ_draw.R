@@ -194,8 +194,11 @@ decision_tree_univ_draw<-function(vary,
       # print(c(prob_prevent_NTV_gavi_complete, prob_prevent_NTV_gavi_complete_RIG, prob_prevent_NTV_gavi_imperfect))
 
     } else {
-      prob_prevent_rabies_given_complete_pep <- params$p_prevent_given_complete
-      prob_prevent_rabies_given_complete_pep_RIG <- params$p_prevent_given_complete
+      bin_confint_no_rigrisk <- Hmisc::binconf(params$p_prevent_given_complete_n, n=params$p_prevent_given_complete_n)
+      bin_confint_rigrisk <- 1 # Hmisc::binconf(params$p_prevent_given_complete_n*10, n=params$p_prevent_given_complete_n*10) # reduce chance of death x 10!
+
+      prob_prevent_rabies_given_complete_pep <- mean(rtriangle(n=1000000, a=bin_confint_no_rigrisk[2], b=bin_confint_no_rigrisk[3]))
+      prob_prevent_rabies_given_complete_pep_RIG <- ((1-RIG_risk) * prob_prevent_rabies_given_complete_pep) + (RIG_risk * bin_confint_rigrisk)
       prob_prevent_rabies_given_imperfect_pep <- params$p_prevent_given_imperfect
 
       prob_prevent_NTV_complete_RIG <- rep(params$p_prevent_given_complete_NTV, horizon) # No difference between protection w & w/o RIG for NTVs!
@@ -389,9 +392,9 @@ decision_tree_univ_draw<-function(vary,
 
 # TESTING
 # decision_tree_univ_draw(vary="suspect_bite_incidence", country="Bangladesh", horizon=length(2020:2035),
-#                         GAVI_status="none", DogVax_TF=T, VaxRegimen="Updated TRC",
-#                         DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none",
-#                         discount=0.03, breaks="5yr", IBCM=FALSE)
+                        # GAVI_status="none", DogVax_TF=F, VaxRegimen="Updated TRC",
+                        # DALYrabies=DALYrabies_input, LE=LE2020, RIG_status="none",
+                        # discount=0.03, breaks="5yr", IBCM=FALSE)
 
 # decision_tree_univ_draw(vary="p_rabid", country="Ethiopia", horizon=length(2020:2035),
 #                         GAVI_status="base", DogVax_TF=F, VaxRegimen="Updated TRC",
@@ -435,7 +438,7 @@ decision_tree_univ_ndraw<-function(ndraw, vary, country, horizon,
 #                     IBCM = TRUE)
 
 # decision_tree_univ_ndraw(ndraw = 10,
-#                          vary = "p_rabid",
+#                          vary = "test",
 #                          country = "Ethiopia",
 #                          horizon = 16,
 #                          GAVI_status = "none",
@@ -453,7 +456,7 @@ decision_tree_univ_ndraw<-function(ndraw, vary, country, horizon,
 
 #
 # decision_tree_univ_ndraw(ndraw=10, vary="bite_incidence", country="Tanzania",
-#                          horizon=10, GAVI_status=GAVI_status, DogVax_TF=DogVax_TF,
+#                          horizon=10, GAVI_status="none", DogVax_TF=F,
 #                          VaxRegimen=VaxRegimen, DALYrabies=DALYrabies, LE=LE,
 #                          RIG_status=RIG_status, discount=discount, breaks=breaks)
 

@@ -1,13 +1,14 @@
 ################################################################################
-#         2020-2070: Rabies elimination scenarios and dog population
-# Use country population growth and dog pop data (output/prepped_data.csv from ms5)
-# with dynamic model trajectories (data/baseline_incidence_Gavi.csv & data/vax_obs_ts_gavi.csv)
-# to get country-specific trajectories (output/rabies_traj.csv) by GBP phase
+#         2020-2070: Rabies elimination scenarios and dog population           #
+# Use country population growth and dog pop data (output/prepped_data.csv from #
+# ms5) with dynamic model trajectories (data/baseline_incidence_Gavi.csv &     #
+# data/vax_obs_ts_gavi.csv) to get country-specific trajectories               #
+# (output/rabies_traj.csv) by GBP phase                                        #
 ################################################################################
 
 rm(list=ls())
 
-## full horizon
+# Full horizon
 yrs = 2020:2070; length(yrs) # elimination traj from 2020 to 2070.
 
 # 1. Import population data including business plan phases
@@ -16,8 +17,8 @@ countries = country_data$country
 
 # Dog rabies incidence - endemic and elimination trajectories
 # baseline = read.csv("data/baseline_ts_Gavi.csv") # Transmission baseline, high (+5%), low (-5%)
-endemic <- read.csv("data/baseline_incidence_Gavi.csv") # endemic <- read.csv("data/baseline_incidence.csv")
-vax = read.csv("data/vax_obs_ts_gavi.csv") # Vaccination timeseries
+endemic <- read.csv("data/baseline_incidence_Gavi_final.csv") # endemic <- read.csv("data/baseline_incidence.csv")
+vax = read.csv("data/vax_obs_ts_gavi_norm.csv") # Vaccination timeseries
 
 # Recalculate to annual cases
 horizon = seq(1, nrow(vax), 12)
@@ -34,17 +35,18 @@ pop = 55827 # estimated dogs in 2012
 lambda = 1.032173
 denom = pop*lambda^(0:(nrow(cases_yr)-1))
 inc_traj = cases_yr/denom
+
+# Write to csv
 write.csv(inc_traj, "output/incidence_trajectories.csv", row.names=FALSE)
+
 control_traj = inc_traj[c(3:16,16,16),] # only start trajectory from the year of mass dog vax intro
 elimination <- c(apply(control_traj, 1, mean), 0, 0)
 
-# elimination_traj <- read.csv("data/incidence_trajectories.csv")
-# elimination <- apply(inc_traj, 1, median, na.rm=TRUE)[24:(23+length(yrs))] # apply(elimination_traj, 1, quantile, 0.99, na.rm=TRUE)
 plot(1:length(denom), inc_traj[,1], type="l", ylim=c(0,0.04))
 for(i in 1:100){lines(1:length(denom), inc_traj[,i])}
 for(i in 1:100){lines(1:length(denom), control_traj[,i], col="red")}
 
-# calculate HDR to generate predictions of dog pop from 2018 to 2070
+# Calculate HDR to generate predictions of dog pop from 2018 to 2070
 HDR = as.numeric(gsub(",", "", country_data$pop2015))/country_data$total_dogs
 y1 = grep("pop2018", names(country_data))
 pop = country_data[, y1:(length(yrs)+y1+2-1)]
@@ -56,7 +58,7 @@ colnames(dogs) <- gsub(x = colnames(dogs), pattern = "\\pop", replacement = "dog
 # Append country name
 dogs$country <- countries
 
-# export
+# Write to csv
 write.csv(dogs, file="output/dogs_pop_traj.csv", row.names=FALSE)
 
 # Business plan phases
@@ -111,6 +113,8 @@ trajII$phase = "II"
 trajIII$phase = "III"
 traj0$phase = "0"
 traj = rbind(trajI, trajII, trajIII, traj0)
+
+# Write to csv
 write.csv(traj, file="output/rabies_traj.csv", row.names=FALSE)
 
 # Plot to check
@@ -123,4 +127,6 @@ rabid_dog_bites = 0.38 # Bites per rabid dog
 RD = dogs[,grep(y1, names(dogs)):grep(yN, names(dogs))]*rabid[,grep(y1, names(rabid)):grep(yN, names(rabid))]
 RDB = RD * rabid_dog_bites
 RDB$country=country_data$country
+
+# Write to csv
 write.csv(RDB, file="output/rabid_dog_bites_2020_2035.csv", row.names=FALSE)

@@ -1,0 +1,70 @@
+"country","bite_incidence","source","setting","rabies","vaccine_free"
+"Afghanistan",NA,NA,NA,NA,NA
+"Bangladesh",0.00103343672456576,"household","mixed","overall",TRUE
+"Bhutan",0.0096015625,"healthcare","mixed","overall",TRUE
+"Cambodia",0.00386,"healthcare","urban","rabid",TRUE
+"Cambodia",0.0112,"household","peri-urban",NA,TRUE
+"Cambodia",0.0299130434782609,"household","rural",NA,TRUE
+"Cambodia",0.0021695,"healthcare","mixed",NA,TRUE
+"Cameroon",0.0264423076923077,"household","rural",NA,FALSE
+"Cameroon",0.000263540271802615,"healthcare","mixed",NA,FALSE
+"Cameroon",0.000309723369754916,"healthcare","mixed",NA,FALSE
+"Central African Republic",0.000215288611544462,"healthcare","mixed",NA,FALSE
+"Chad",0.000548,"healthcare","urban","overall",FALSE
+"Chad",0.006036,"household","mixed",NA,FALSE
+"Chad",0.00495,"household","mixed",NA,FALSE
+"Chad",0.006,"household","mixed","overall",FALSE
+"Democratic Republic of the Congo",0.000126325,"healthcare","mixed","overall",FALSE
+"Ethiopia",0.0011,"contact_tracing","mixed","rabid",FALSE
+"Ethiopia",0.00065425,"healthcare","mixed",NA,FALSE
+"Gambia",NA,NA,NA,NA,NA
+"Ghana",NA,NA,NA,NA,TRUE
+"Guinea",0.000363365,"healthcare","urban",NA,FALSE
+"Haiti",0.02,"household","mixed",NA,FALSE
+"Haiti",0.000187,"healthcare","mixed",NA,FALSE
+"Haiti",0.000467,"healthcare","mixed",NA,FALSE
+"Haiti",0.0318,"household","mixed",NA,FALSE
+"India",0.017,"household","mixed",NA,NA
+"India",0.014,"household","urban",NA,NA
+"India",0.018,"household","rural",NA,NA
+"India",0.003665,"healthcare","rural",NA,NA
+"India",0.00376422398439667,"healthcare","rural",NA,NA
+"India",0.00280773317100892,"healthcare","rural",NA,NA
+"India",0.0036541921368164,"healthcare","rural",NA,NA
+"India",0.0032683244307038,"healthcare","mixed",NA,NA
+"India",0.003504208,"healthcare","mixed",NA,NA
+"Ivory Coast",5e-04,"household","mixed","overall",FALSE
+"Kenya",0.00105736555124126,"healthcare","mixed",NA,FALSE
+"Lao People's Democratic Republic",0.00051499684566251,"healthcare","mixed",NA,FALSE
+"Liberia",0.0002310176,"healthcare","urban",NA,FALSE
+"Malawi",NA,NA,NA,NA,NA
+"Mali",0.00145,"household",NA,NA,FALSE
+"Mali",0.0022,"household","mixed","overall",FALSE
+"Mozambique",0.001932,"healthcare","urban",NA,FALSE
+"Nepal",0.0012505,"healthcare",NA,NA,TRUE
+"Nigeria",NA,NA,NA,NA,NA
+"Pakistan",0.000455,"healthcare","mixed",NA,TRUE
+"Philippines",0.00430594713082836,"healthcare","mixed",NA,TRUE
+"Philippines",0.00839,"healthcare","mixed",NA,TRUE
+"Philippines",0.0104,"healthcare","mixed",NA,TRUE
+"Philippines",0.00971,"healthcare","mixed",NA,TRUE
+"Philippines",0.00585,"healthcare","mixed",NA,TRUE
+"Philippines",0.03184,"household","mixed",NA,TRUE
+"Philippines",0.01259,"household","mixed",NA,TRUE
+"Philippines",0.01243,"household","mixed",NA,TRUE
+"Philippines",0.01263,"household","mixed",NA,TRUE
+"Senegal",NA,NA,NA,NA,NA
+"Sri Lanka",0.0156560084430354,"healthcare","mixed",NA,TRUE
+"Sri Lanka",0.0156560084430354,"healthcare",NA,NA,TRUE
+"Tajikistan",0.001998,"healthcare","mixed",NA,NA
+"Tanzania",0.001006067,"healthcare","rural",NA,FALSE
+"Tanzania",0.000608552471911948,"healthcare",NA,NA,FALSE
+"Thailand",0.00245,"healthcare",NA,"rabid",FALSE
+"Thailand",0.00107,"healthcare",NA,NA,FALSE
+"Togo",NA,NA,NA,NA,NA
+"Uganda",0.00123152709359606,"household","mixed",NA,NA
+"Uganda",0.0016710466179159,"household","mixed",NA,NA
+"Vietnam",0.004,"healthcare","mixed",NA,FALSE
+"Yemen",NA,NA,NA,NA,NA
+"Zambia",0.000424,"healthcare",NA,NA,NA
+"Zimbabwe",NA,NA,NA,NA,NA

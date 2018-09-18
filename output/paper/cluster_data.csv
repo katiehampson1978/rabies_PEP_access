@@ -1,0 +1,5 @@
+"cluster","p_seek","p_seek_n","p_receive","p_receive_n","p_complete","p_complete_n","price_per_vial","price_per_vial_RIG"
+"americas",0.632,68,0.382,68,0.655,68,41,145
+"asia",0.76,1200,0.754,33497,0.753,41167,13,41
+"east africa",0.66,2240,0.543,2415,0.413,1463,21,168
+"west africa",0.523,1095,0.687,9838,0.422,4261,15,83
